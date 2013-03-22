@@ -1,4 +1,4 @@
 language : cpp
 compiler : gcc
-before-scrîpt : sudo apt-get install qt4 libqjson-dev
+before_scrîpt : sudo apt-get install qt4 libqjson-dev
 script : qmake && make
