@@ -42,7 +42,7 @@ class ChronoEdit : public QWidget
         void deleteSelectedLieu();
 
     public slots:
-        void save();
+        void save(int a = -1, int b = -1);
         void open();
 
     signals:

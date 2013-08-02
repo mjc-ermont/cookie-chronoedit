@@ -6,6 +6,8 @@ ChronoEdit::ChronoEdit(QWidget *parent) : QWidget(parent), ui(new Ui::ChronoEdit
 
     ui->events->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
+    open();
+
     connect(ui->addContributeur, SIGNAL(pressed()), this, SLOT(ajouterContrib()));
     connect(ui->addContributeur, SIGNAL(pressed()), ui->setContributeur, SLOT(clear()));
 
@@ -26,8 +28,7 @@ ChronoEdit::ChronoEdit(QWidget *parent) : QWidget(parent), ui(new Ui::ChronoEdit
     connect(ui->addLieu, SIGNAL(pressed()), this, SLOT(save()));
     connect(ui->addContributeur, SIGNAL(pressed()), this, SLOT(save()));
     connect(ui->addEvent, SIGNAL(pressed()), this, SLOT(save()));
-
-    open();
+    connect(ui->events, SIGNAL(cellChanged(int, int)), this, SLOT(save(int, int)));
 }
 
 ChronoEdit::~ChronoEdit(){
@@ -118,7 +119,10 @@ void ChronoEdit::ajouterEvent(){
     ui->eventDesc->clear();
 }
 
-void ChronoEdit::save(){
+void ChronoEdit::save(int a, int b){
+    if(a != -1 && b != -1)
+        qDebug() << "["<<a<<"-"<<b<<"] change";
+
     QFile fichier("chronologie.json");
     QString config( json() );
 
