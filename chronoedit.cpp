@@ -137,8 +137,8 @@ void ChronoEdit::save(){
 void ChronoEdit::open(){
     QFile fichier("chronologie.json");
     QString json("");
-    //QJson::Parser parser;
 
+    // Lecture du fichier
     if(fichier.open(QIODevice::ReadOnly)){
         qDebug("\nOuverture du fichier de configuration pour lecture reussie");
         json = fichier.readAll();
@@ -146,18 +146,28 @@ void ChronoEdit::open(){
         fichier.close();
     }
 
-    /*QVariantMap result = parser.parse(json.toAscii()).toMap();
-    foreach(QString contrib, result["contributeurs"].toStringList()){
-        setContrib(contrib);
+    // Parsage du Json
+    QJsonDocument d = QJsonDocument::fromJson(json.toUtf8());
+    if(d.isNull())  qWarning() << "Json invalide";
+    QJsonObject j = d.object();
+
+    // Exploitation
+    foreach(QJsonValue contrib, j["contributeurs"].toArray()){
+        setContrib(contrib.toString());
     }
-    foreach(QString lieu, result["lieux"].toStringList()){
-        setLieu(lieu);
+    foreach(QJsonValue lieu, j["lieux"].toArray()){
+        setLieu(lieu.toString());
     }
-    QVariantList eventList(result["events"].toList());
-    foreach(QVariant eventstr, eventList){
-        QVariantMap event = eventstr.toMap();
-        setEvent(event["titre"].toString(), event["debut"].toString(), event["fin"].toString(),event["lieu"].toString() , event["contributeurs"].toString(), event["avant"] == "avant", event["description"].toString());
-    }*/
+    foreach(QJsonValue event, j["events"].toArray()){
+        QJsonObject e = event.toObject();
+        setEvent(e["titre"].toString(),
+                 e["debut"].toString(),
+                 e["fin"].toString(),
+                 e["lieu"].toString(),
+                 e["contributeurs"].toString(),
+                 e["avant"].toString() == "avant",
+                 e["description"].toString() );
+    }
 }
 
 void ChronoEdit::refreshContribLabel(){
