@@ -1,4 +1,8 @@
-#include <QtGui/QApplication>
+#include <QtGui>
+#if QT_VERSION >= 0x050000
+    #include <QtWidgets>
+#endif
+
 #include "chronoedit.h"
 
 int main(int argc, char *argv[])

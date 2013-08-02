@@ -4,7 +4,7 @@
 ChronoEdit::ChronoEdit(QWidget *parent) : QWidget(parent), ui(new Ui::ChronoEdit){
     ui->setupUi(this);
 
-    ui->events->horizontalHeader()->setResizeMode(QHeaderView::ResizeToContents);
+    SET_RESIZE_MODE(QHeaderView::ResizeToContents);
 
     connect(ui->addContributeur, SIGNAL(pressed()), this, SLOT(ajouterContrib()));
     connect(ui->addContributeur, SIGNAL(pressed()), ui->setContributeur, SLOT(clear()));
@@ -35,7 +35,7 @@ ChronoEdit::~ChronoEdit(){
 }
 
 QString ChronoEdit::json(){
-    QVariantMap all;
+    /*QVariantMap all;
 
         QVariantList contributeurs;
         for(int i = 0 ; i < ui->Contributeurs->count() ; i++){
@@ -65,8 +65,8 @@ QString ChronoEdit::json(){
 
     QJson::Serializer serializer;
     QByteArray json = serializer.serialize(all);
-
-    return QString(json);
+*/
+    return QString(/*json*/ "");
 }
 
 void ChronoEdit::setContrib(QString contrib){
@@ -121,12 +121,13 @@ void ChronoEdit::ajouterEvent(){
 
 void ChronoEdit::save(){
     QFile fichier("chronologie.json");
-    QString config(json());
+    QString config(/*json()*/ "dan");
 
     if(fichier.open(QIODevice::WriteOnly))
     {
         qDebug("Ouverture du fichier de configuration pour ecriture reussie");
-        fichier.write(config.toAscii());
+
+        fichier.write(TO_ASCII(config));
 
         fichier.flush();
         fichier.close();
@@ -136,7 +137,7 @@ void ChronoEdit::save(){
 void ChronoEdit::open(){
     QFile fichier("chronologie.json");
     QString json("");
-    QJson::Parser parser;
+    //QJson::Parser parser;
 
     if(fichier.open(QIODevice::ReadOnly)){
         qDebug("\nOuverture du fichier de configuration pour lecture reussie");
@@ -145,7 +146,7 @@ void ChronoEdit::open(){
         fichier.close();
     }
 
-    QVariantMap result = parser.parse(json.toAscii()).toMap();
+    /*QVariantMap result = parser.parse(json.toAscii()).toMap();
     foreach(QString contrib, result["contributeurs"].toStringList()){
         setContrib(contrib);
     }
@@ -156,7 +157,7 @@ void ChronoEdit::open(){
     foreach(QVariant eventstr, eventList){
         QVariantMap event = eventstr.toMap();
         setEvent(event["titre"].toString(), event["debut"].toString(), event["fin"].toString(),event["lieu"].toString() , event["contributeurs"].toString(), event["avant"] == "avant", event["description"].toString());
-    }
+    }*/
 }
 
 void ChronoEdit::refreshContribLabel(){
