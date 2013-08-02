@@ -35,38 +35,37 @@ ChronoEdit::~ChronoEdit(){
 }
 
 QString ChronoEdit::json(){
-    /*QVariantMap all;
+    QJsonDocument dJson;
+    QJsonObject json;
 
-        QVariantList contributeurs;
+        QJsonArray contributeurs;
         for(int i = 0 ; i < ui->Contributeurs->count() ; i++){
-            contributeurs << ui->Contributeurs->item(i)->text();
+            contributeurs.append( ui->Contributeurs->item(i)->text() );
         }
-        all.insert("contributeurs", contributeurs);
+        json.insert("contributeurs", contributeurs);
 
-        QVariantList lieux;
-        for(int i = 0 ; i < ui->Lieux->count() ; i ++){
-            lieux << ui->Lieux->item(i)->text();
+        QJsonArray lieux;
+        for(int i = 0 ; i < ui->Lieux->count() ; i++){
+            lieux.append( ui->Lieux->item(i)->text() );
         }
-        all.insert("lieux", lieux);
+        json.insert("lieux", lieux);
 
-        QVariantList events;
+        QJsonArray events;
         for(int i = 0 ; i < ui->events->rowCount() ; i ++){
-            QVariantMap event;
-            event.insert("titre", ui->events->item(i, 0)->text());
-            event.insert("debut", ui->events->item(i, 1)->text());
-            event.insert("avant", ui->events->item(i, 2)->text());
-            event.insert("fin", ui->events->item(i, 3)->text());
-            event.insert("lieu", ui->events->item(i, 4)->text());
-            event.insert("contributeurs", ui->events->item(i, 5)->text());
-            event.insert("description", ui->events->item(i, 6)->text());
-            events.insert(i, event);
+            QJsonObject event;
+                event.insert("titre", ui->events->item(i, 0)->text());
+                event.insert("debut", ui->events->item(i, 1)->text());
+                event.insert("avant", ui->events->item(i, 2)->text());
+                event.insert("fin", ui->events->item(i, 3)->text());
+                event.insert("lieu", ui->events->item(i, 4)->text());
+                event.insert("contributeurs", ui->events->item(i, 5)->text());
+                event.insert("description", ui->events->item(i, 6)->text());
+            events.append(event);
         }
-        all.insert("events", events);
+        json.insert("events", events);
 
-    QJson::Serializer serializer;
-    QByteArray json = serializer.serialize(all);
-*/
-    return QString(/*json*/ "");
+    dJson.setObject(json);
+    return QString( dJson.toJson() );
 }
 
 void ChronoEdit::setContrib(QString contrib){
@@ -121,13 +120,13 @@ void ChronoEdit::ajouterEvent(){
 
 void ChronoEdit::save(){
     QFile fichier("chronologie.json");
-    QString config(/*json()*/ "dan");
+    QString config( json() );
 
     if(fichier.open(QIODevice::WriteOnly))
     {
         qDebug("Ouverture du fichier de configuration pour ecriture reussie");
 
-        fichier.write(config.toLatin1());
+        fichier.write( config.toUtf8() );
 
         fichier.flush();
         fichier.close();
