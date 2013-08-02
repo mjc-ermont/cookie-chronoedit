@@ -24,7 +24,7 @@
       <string/>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tabEvent">
       <attribute name="icon">
@@ -59,10 +59,10 @@
           <bool>true</bool>
          </property>
          <attribute name="horizontalHeaderVisible">
-          <bool>false</bool>
+          <bool>true</bool>
          </attribute>
          <attribute name="horizontalHeaderCascadingSectionResizes">
-          <bool>false</bool>
+          <bool>true</bool>
          </attribute>
          <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
           <bool>true</bool>
@@ -184,13 +184,6 @@
                 <property name="whatsThis">
                  <string/>
                 </property>
-                <property name="time">
-                 <time>
-                  <hour>0</hour>
-                  <minute>0</minute>
-                  <second>0</second>
-                 </time>
-                </property>
                 <property name="minimumTime">
                  <time>
                   <hour>0</hour>
@@ -200,6 +193,13 @@
                 </property>
                 <property name="calendarPopup">
                  <bool>false</bool>
+                </property>
+                <property name="time">
+                 <time>
+                  <hour>0</hour>
+                  <minute>0</minute>
+                  <second>0</second>
+                 </time>
                 </property>
                </widget>
               </item>
