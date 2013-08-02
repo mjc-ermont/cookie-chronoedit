@@ -4,7 +4,7 @@
 ChronoEdit::ChronoEdit(QWidget *parent) : QWidget(parent), ui(new Ui::ChronoEdit){
     ui->setupUi(this);
 
-    SET_RESIZE_MODE(QHeaderView::ResizeToContents);
+    ui->events->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
     connect(ui->addContributeur, SIGNAL(pressed()), this, SLOT(ajouterContrib()));
     connect(ui->addContributeur, SIGNAL(pressed()), ui->setContributeur, SLOT(clear()));
@@ -127,7 +127,7 @@ void ChronoEdit::save(){
     {
         qDebug("Ouverture du fichier de configuration pour ecriture reussie");
 
-        fichier.write(TO_ASCII(config));
+        fichier.write(config.toLatin1());
 
         fichier.flush();
         fichier.close();

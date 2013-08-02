@@ -2,18 +2,7 @@
 #define CHRONOEDIT_H
 
 #include <QtGui>
-#if QT_VERSION >= 0x050000
-    #include <QtWidgets>
-#endif
-
-// Define pour deux fonctions modifies avec Qt5
-#if QT_VERSION >= 0x050000
-    #define TO_ASCII(str) str.toLatin1()
-    #define SET_RESIZE_MODE(mode) ui->events->horizontalHeader()->setSectionResizeMode(mode)
-#else
-    #define TO_ASCII(str) str.toAscii()
-    #define SET_RESIZE_MODE(mode) ui->events->horizontalHeader()->setResizeMode(mode)
-#endif
+#include <QtWidgets>
 
 namespace Ui {
 class ChronoEdit;
