@@ -1,5 +1,5 @@
 language : cpp
 compiler : gcc
 before_script:
-  - sudo apt-get install qt5-qmake
+  - sudo apt-get install qt5-meta-minimal
 script : qmake && make
